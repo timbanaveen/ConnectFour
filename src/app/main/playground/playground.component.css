@@ -1,0 +1,47 @@
+.grid-wrapper {
+    display: inline-flex;
+    float: left;
+    margin-left: 16%;
+    margin-top: 5%;
+    height: 75%;
+    width: 36%;
+    border: 2px solid #294e80;
+    border-radius: 0 0 30px 30px;
+    flex-direction: column;
+    padding: 5px 10px;
+}
+
+.grid-row {
+    flex-direction: row;
+    display: flex;
+    flex-grow: 7;
+}
+
+.grid-cell,
+.psuedo-grid-cell {
+    border-radius: 50%;
+    flex-direction: row;
+    border: 2px solid #294e80;
+    flex-grow: 7;
+    margin: 5px;
+}
+
+.psuedo-grid-cell {
+    border-color: transparent;
+}
+
+.disc-image {
+    flex-grow: 7;
+}
+
+.grid-cell.red,
+.psuedo-grid-cell.red.selected {
+    background-color: red;
+    border-color: red;
+}
+
+.grid-cell.green,
+.psuedo-grid-cell.green.selected {
+    background-color: limegreen;
+    border-color: limegreen;
+}

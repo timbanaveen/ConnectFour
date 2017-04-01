@@ -1,0 +1,17 @@
+<div class="grid-wrapper">
+    <div class="disc-image grid-row">
+        <div *ngFor="let item of psuedoDiscs" 
+            class="psuedo-grid-cell {{chanceColor}} {{item.selected}}" >
+        </div>
+    </div>
+    <div class="grid-row"
+        *ngFor="let columns of data; let i = index"
+        >
+        <div *ngFor="let item of columns; let j = index" 
+            class="grid-cell {{item.class}}"
+            (click)="handleClick(item, i, j)"
+            (mouseenter)="handleMouseEnter(item, j)"
+            (mouseleave)="handleMouseLeave(item, j)" >
+        </div>
+    </div>
+</div>

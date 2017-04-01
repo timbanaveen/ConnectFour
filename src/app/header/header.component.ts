@@ -14,6 +14,6 @@ export class HeaderComponent {
     selectedGame = 0;
 
     handleGameTypeChange(): void {
-        debugger;
+        console.log('selected value: ', this.selectedGame);
     }
  }

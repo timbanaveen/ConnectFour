@@ -1,4 +1,4 @@
-export class GameType {
+export interface GameType {
     name: string;
     value: number;
 }

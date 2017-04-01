@@ -1,0 +1,27 @@
+aside {
+    display: inline-block;
+    float: left;
+    height: 100%;
+    width: 25%;
+    background-color: #a9a9a9;
+    box-shadow: 1px 0 1px 0 #333;
+}
+
+.name {
+    padding: 15px 5px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.name.selected.playerone {
+    color: red;
+}
+
+.name.selected.playertwo {
+    color: limegreen;
+}
+
+.name.selected {
+    background-color: white;
+    box-shadow: inset -5px 0px 0px 0px #294e80;
+}

@@ -1,17 +1,15 @@
 .header {
-    padding: 15px 10px;
-    background-color: #999;
-    box-shadow: 0 1px 1px 0 #333;
+    padding: 15px 20px;
+    background-color: #294E80;
 }
 
 .header-text {
     font-size: 2em;
-    color: #333;
+    color: #fff;
 }
 
 .game-type {
     padding: 5px;
-    border-radius: 4px;
+    border-radius: 2px;
     font-size: 1em;
-    border: 1px solid #53575c;
 }
