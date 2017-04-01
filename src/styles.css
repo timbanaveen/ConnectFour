@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+    height: 100vh;
+    width: 100vw;
+}
+
+body {
+    margin: 0;
+    font-size: 14px;
+    color: #53575c;
+}
+
+.pull-right {
+    float: right;
+}
