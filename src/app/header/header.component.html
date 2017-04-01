@@ -1,0 +1,13 @@
+<div class="header">
+    <span class="header-text">{{title}}</span>
+    <select name="gametype" 
+            id="game-type" 
+            class="game-type pull-right" 
+            [(ngModel)]="selectedGame"
+            (change)="handleGameTypeChange()" >
+        <option 
+            *ngFor="let item of gameTypes" 
+            value={{item.value}} >
+        {{item.name}}</option>
+    </select>
+</div>
