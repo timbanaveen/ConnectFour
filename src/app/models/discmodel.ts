@@ -1,7 +1,7 @@
-import { GridValueTypes } from '../constants/gridvaluetypes';
+import { DiscTypes } from '../constants/disctypes.enum';
 
 export interface DiscModel {
-    value; // color of disc
+    type: DiscTypes; // color of disc
     bottomCount; // stores the count of same color disc on bottom
     leftCount; // stores the count of same color disc on left
     rightCount; // stores the count of same color disc on right

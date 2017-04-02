@@ -3,7 +3,7 @@
     float: left;
     margin-left: 16%;
     margin-top: 5%;
-    height: 75%;
+    height: 72%;
     width: 36%;
     border: 2px solid #294e80;
     border-radius: 0 0 30px 30px;
@@ -19,14 +19,18 @@
 
 .grid-cell,
 .psuedo-grid-cell {
-    border-radius: 50%;
     flex-direction: row;
-    border: 2px solid #294e80;
     flex-grow: 7;
-    margin: 5px;
+    padding: 5px;
 }
 
-.psuedo-grid-cell {
+.grid-disc {
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid #294e80;
+}
+
+.psuedo-grid-cell .grid-disc {
     border-color: transparent;
 }
 
@@ -34,14 +38,14 @@
     flex-grow: 7;
 }
 
-.grid-cell.red,
-.psuedo-grid-cell.red.selected {
+.grid-cell .grid-disc.red,
+.psuedo-grid-cell .grid-disc.red.active {
     background-color: red;
     border-color: red;
 }
 
-.grid-cell.green,
-.psuedo-grid-cell.green.selected {
+.grid-cell .grid-disc.green,
+.psuedo-grid-cell .grid-disc.green.active {
     background-color: limegreen;
     border-color: limegreen;
 }

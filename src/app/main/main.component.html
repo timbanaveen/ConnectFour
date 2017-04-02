@@ -1,1 +1,4 @@
-<app-game-hnh></app-game-hnh>
+<app-game-hnh
+    [gameId]="gameId"
+    (gameCompleted)="reInitGame($event)" >
+</app-game-hnh>
