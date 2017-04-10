@@ -1,2 +1,8 @@
-<app-header></app-header>
-<app-main></app-main>
+<app-header
+    [selectedGame]="selectedGame.value"
+    (gameChanged)="handleGameChange($event)" >
+</app-header>
+
+<app-main
+    [selectedGame]="selectedGame.value" >
+</app-main>

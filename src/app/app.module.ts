@@ -10,10 +10,12 @@ import { MainComponent } from './main/main.component';
 import { HumanHumanComponent } from './main/games/humanhuman.component';
 import { AsideComponent } from './main/aside/aside.component';
 import { PlaygroundComponent } from './main/playground/playground.component';
+import { HumancomputerComponent } from './main/games/humancomputer.component';
 
 // Services
 import { DiscService } from './service/disc.service';
 import { ConnectFourService } from './service/connectfour.service';
+import { MinmaxService } from './service/minmax.service';
 
 @NgModule({
     declarations: [
@@ -22,7 +24,8 @@ import { ConnectFourService } from './service/connectfour.service';
         MainComponent,
         HumanHumanComponent,
         AsideComponent,
-        PlaygroundComponent
+        PlaygroundComponent,
+        HumancomputerComponent
     ],
     imports: [
         BrowserModule,
@@ -31,7 +34,8 @@ import { ConnectFourService } from './service/connectfour.service';
     ],
     providers: [
         DiscService,
-        ConnectFourService
+        ConnectFourService,
+        MinmaxService
     ],
     bootstrap: [AppComponent]
 })

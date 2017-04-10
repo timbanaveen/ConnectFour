@@ -1,4 +1,10 @@
 <app-game-hnh
+    *ngIf="selectedGame === 0"
     [gameId]="gameId"
     (gameCompleted)="reInitGame($event)" >
 </app-game-hnh>
+<app-humancomputer
+    *ngIf="selectedGame === 1"
+    [gameId]="gameId"
+    (gameCompleted)="reInitGame($event)" >
+</app-humancomputer>

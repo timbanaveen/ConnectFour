@@ -11,8 +11,10 @@ import { DiscService } from './disc.service';
 export class ConnectFourService {
     private _discService;
     private discAddedSource = new Subject<String>();
+    private gridStateChangedSource = new Subject<any>();
 
     discAdded$ = this.discAddedSource.asObservable();
+    gridStateChanged$ = this.gridStateChangedSource.asObservable();
 
     constructor (
         discService: DiscService
@@ -78,13 +80,13 @@ export class ConnectFourService {
             return gridState[i][j][prop];
         };
 
-        updateCount(nextLeft, 'leftCount', getSameLast([rowIdx, colIdx], nextRight));
+        // updateCount(nextLeft, 'leftCount', getSameLast([rowIdx, colIdx], nextRight));
         updateCount(nextRight, 'rightCount', getSameLast([rowIdx, colIdx], nextLeft));
         updateCount(nextBottom, 'bottomCount', [rowIdx, colIdx]);
         updateCount(nextTopLeft, 'topLeftCount', getSameLast([rowIdx, colIdx], nextBottomRight));
         updateCount(nextTopRight, 'topRightCount', getSameLast([rowIdx, colIdx], nextBottomLeft));
-        updateCount(nextBottomLeft, 'bottomLeftCount', getSameLast([rowIdx, colIdx], nextTopRight));
-        updateCount(nextBottomRight, 'bottomRightCount', getSameLast([rowIdx, colIdx], nextTopLeft));
+        // updateCount(nextBottomLeft, 'bottomLeftCount', getSameLast([rowIdx, colIdx], nextTopRight));
+        // updateCount(nextBottomRight, 'bottomRightCount', getSameLast([rowIdx, colIdx], nextTopLeft));
 
         if (isWon) {
             this.discAddedSource.next('Won');
@@ -121,7 +123,12 @@ export class ConnectFourService {
         currentState[insertRowIdx][colIdx] = this._discService.getDisc(PlayerColors[discColor]);
 
         this.updateDiscData(currentState, insertRowIdx, colIdx, currentState[insertRowIdx][colIdx]);
+
         // Notify subscribers.
+        this.gridStateChangedSource.next({
+            idx: colIdx,
+            val: PlayerColors[discColor]
+        });
         this.discAddedSource.next();
 
         return true;

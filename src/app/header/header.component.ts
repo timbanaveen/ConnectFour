@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { GameTypes } from '../constants/gametypes';
 import { GameType } from '../models/gametype';
@@ -11,9 +11,11 @@ import { GameType } from '../models/gametype';
 export class HeaderComponent {
     title = 'Connect Four';
     gameTypes: GameType[] = GameTypes;
-    selectedGame = 0;
+
+    @Input() selectedGame;
+    @Output() gameChanged = new EventEmitter();
 
     handleGameTypeChange(): void {
-        console.log('selected value: ', this.selectedGame);
+        this.gameChanged.emit(this.selectedGame);
     }
  }

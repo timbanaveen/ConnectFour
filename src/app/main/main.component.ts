@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-main',
@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class MainComponent {
     gameId = 1;
+
+    @Input() selectedGame;
 
     reInitGame() {
         this.gameId++;

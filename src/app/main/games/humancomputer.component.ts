@@ -8,14 +8,16 @@ import { PlayerColors } from '../../constants/playercolors';
 
 import { DiscService } from '../../service/disc.service';
 import { ConnectFourService } from '../../service/connectfour.service';
+import { MinmaxService } from '../../service/minmax.service';
 
 @Component({
-    selector: 'app-game-hnh',
-    templateUrl: './humanhuman.component.html'
+    selector: 'app-humancomputer',
+    templateUrl: './humancomputer.component.html'
 })
-export class HumanHumanComponent implements OnDestroy {
+export class HumancomputerComponent implements OnDestroy {
     private _connectFourService: ConnectFourService;
     private _discService: DiscService;
+    private _minMaxService: MinmaxService;
     private asideData: AsideInfoModel;
     private playgroundData: DiscModel[][];
     private playgroundPsuedoDiscs: DiscModel[];
@@ -31,10 +33,12 @@ export class HumanHumanComponent implements OnDestroy {
      */
     constructor(
         discService: DiscService,
-        connectFourService: ConnectFourService
+        connectFourService: ConnectFourService,
+        minMaxService: MinmaxService
     ) {
         this._connectFourService = connectFourService;
         this._discService = discService;
+        this._minMaxService = minMaxService;
 
         this.initGame();
 
@@ -43,8 +47,9 @@ export class HumanHumanComponent implements OnDestroy {
         this.subscription = this._connectFourService.discAdded$.subscribe(
             (msg) => {
                 if (msg === 'Won') {
+                    const winner = this.chanceIdx ? 'Computer' : 'Player';
                     setTimeout(() => {
-                        alert(`Player ${(this.chanceIdx ^ 1) + 1} wins the game!!!`);
+                        alert(`${winner} wins the game!!!`);
                         this.initGame();
                     }, 10); // waiting for completing layout.
                 } else if (msg === 'Draw') {
@@ -61,7 +66,6 @@ export class HumanHumanComponent implements OnDestroy {
         );
     }
 
-
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
@@ -73,6 +77,8 @@ export class HumanHumanComponent implements OnDestroy {
         this.initChance();
         this.initAsideData();
         this.initplayGroundData();
+
+        this._minMaxService.initMinMax();
     }
 
     /**
@@ -80,7 +86,7 @@ export class HumanHumanComponent implements OnDestroy {
      */
     private initChance() {
         // select chance on random.
-        this.chanceIdx = this.id() % 2;
+        this.chanceIdx = 0; // this.id() % 2;
         this.chanceColor = PlayerColors[this.chanceIdx];
     }
 
@@ -89,8 +95,8 @@ export class HumanHumanComponent implements OnDestroy {
      */
     private initAsideData() {
         this.asideData = {
-            playerOne: 'Player 1',
-            playerTwo: 'Player 2',
+            playerOne: 'Player',
+            playerTwo: 'Computer',
             chanceIdx: this.chanceIdx
         };
     }
@@ -132,5 +138,13 @@ export class HumanHumanComponent implements OnDestroy {
         this.chanceIdx ^= 1;
         this.asideData.chanceIdx = this.chanceIdx;
         this.chanceColor = PlayerColors[this.chanceIdx];
+
+        // if computer's chance get position.
+        if (this.chanceIdx === 1) {
+            this.handleDiscAddition(
+                this._minMaxService.getBestcolumn()
+            );
+        }
     }
+
 }
