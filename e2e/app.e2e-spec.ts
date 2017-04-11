@@ -1,6 +1,6 @@
 import { ConnectFourPage } from './app.po';
 
-describe('connect-fourtemp App', () => {
+describe('connect-four App', () => {
   let page: ConnectFourPage;
 
   beforeEach(() => {
@@ -9,6 +9,6 @@ describe('connect-fourtemp App', () => {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getHeaderText()).toEqual('Connect Four');
   });
 });
