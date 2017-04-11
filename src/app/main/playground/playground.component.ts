@@ -8,7 +8,7 @@ import { PlayerColors } from '../../constants/playercolors';
 })
 export class PlaygroundComponent {
     @Input() id;
-    @Input() data;
+    @Input() gridData;
     @Input() psuedoDiscs;
     @Input() chanceColor;
     @Output() onDiscAddition = new EventEmitter();
