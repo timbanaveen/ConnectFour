@@ -13,6 +13,7 @@ export class ConnectFourService {
     private discAddedSource = new Subject<String>();
     private gridStateChangedSource = new Subject<any>();
 
+    // Observables to utilizing components/services.
     discAdded$ = this.discAddedSource.asObservable();
     gridStateChanged$ = this.gridStateChangedSource.asObservable();
 
@@ -22,6 +23,13 @@ export class ConnectFourService {
         this._discService = discService;
     }
 
+    /**
+     * Updates the Disc data which holds the count of same neighbor discs.
+     * @param gridState
+     * @param rowIdx
+     * @param colIdx
+     * @param disc
+     */
     private updateDiscData(gridState: DiscModel[][], rowIdx, colIdx, disc: DiscModel) {
         let isWon;
 

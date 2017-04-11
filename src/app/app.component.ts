@@ -17,6 +17,10 @@ export class AppComponent {
         this.selectedGame = GameTypes[0];
     }
 
+    /**
+     * Update selected game, this will also change underlying component accordingly.
+     * @param gameIdx Game Index of selected game
+     */
     handleGameChange(gameIdx) {
         this.selectedGame = GameTypes[gameIdx];
     }

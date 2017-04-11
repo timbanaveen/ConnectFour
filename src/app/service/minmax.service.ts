@@ -4,26 +4,33 @@ import { ConnectFourService } from './connectfour.service';
 
 @Injectable()
 export class MinmaxService {
-    data;
-    filledIndex = [];
+    data; // state of game
+    filledIndex = []; // counter to get current count of filled columns
 
     rowCount = 6;
     colCount = 7;
     maxValue = Number.MAX_SAFE_INTEGER;
 
-    minMaxTree;
+    minMaxTree; // Tree contains all possible states.
 
+    // Util methods for moving step by step.
     left = (coords) => [coords[0], coords[1] - 1];
     right = (coords) => [coords[0], coords[1] + 1];
     bottom = (coords) => [coords[0] + 1, coords[1]];
     bottomLeft = (coords) => [coords[0] + 1, coords[1] - 1];
     bottomRight = (coords) => [coords[0] + 1, coords[1] + 1];
 
+    /**
+     * Method to check if given coordinates are in range of grid.
+     */
     isInRange = (x, y) => {
         return (x >= 0 && x < this.rowCount &&
                 y >= 0 && y < this.colCount);
     }
 
+    /**
+     * Method gets the count of same colored disc in given direction.
+     */
     getCount = (data, val, next, coords) => {
         let x = coords[0];
         let y = coords[1];
@@ -45,6 +52,7 @@ export class MinmaxService {
     constructor(
         connectFourService: ConnectFourService
     ) {
+        // Change internal state according to change in game state at UI.
         connectFourService.gridStateChanged$.subscribe((addInfo) => {
             const colIdx = addInfo.idx;
             const val = addInfo.val;
@@ -54,6 +62,9 @@ export class MinmaxService {
         });
     }
 
+    /**
+     * Init all data-structures used in service.
+     */
     public initMinMax() {
         this.minMaxTree = {
             root: new Node('root', [])
@@ -79,6 +90,15 @@ export class MinmaxService {
         }
     }
 
+    /**
+     * Creates MinMax tree Iteratively, tree can of height of 5,
+     * MinMax Tree: tree of all possible states of game according to current state.
+     *
+     * This MinMax algortihm is 5-plie.
+     * @param data Current state of game
+     * @param filledIndex Counter array of filled columns
+     * @param val Value of Max player, Max player is player whose next chance is decided by this MinMax algorithm.
+     */
     private createTree(data, filledIndex, val) {
         for (let i = 0; i < this.colCount; i++) {
             const dataCopy = JSON.parse(JSON.stringify(data));
@@ -142,6 +162,12 @@ export class MinmaxService {
         }
     }
 
+    /**
+     * Checks if lastly added disc terminates the game by winning it.
+     * @param data state of game
+     * @param x x-coordinate of latest added disc
+     * @param y y-coordinate of latest added disc
+     */
     private isWinningShot(data, x, y) {
         const val = data[x][y];
 
@@ -162,6 +188,12 @@ export class MinmaxService {
         );
     }
 
+    /**
+     * Checks if lastly added disc terminates the tree.
+     * @param data state of game
+     * @param filledIndex
+     * @param idx column index of node.
+     */
     private isTerminalNode(data, filledIndex, idx) {
         if (filledIndex[idx] === this.rowCount
             || this.isWinningShot(data, this.rowCount - filledIndex[idx], idx)) {
@@ -171,6 +203,15 @@ export class MinmaxService {
         return false;
     }
 
+    /**
+     * 
+     * @param data
+     * @param filledIndex
+     * @param val Value of added disc
+     * @param idx column index of added disc
+     * @param parent pointer to parent node in tree
+     * @param isLastLevel boolean to check if current level is 5th.
+     */
     private putValue(data, filledIndex, val, idx, parent, isLastLevel?) {
         if (filledIndex[idx] < this.rowCount) {
             data[this.rowCount - filledIndex[idx] - 1][idx] = val + 1;
@@ -199,7 +240,17 @@ export class MinmaxService {
         }
     }
 
-    public getHeuristicValue(gameState, filledIndex, newValue, colIdx) {
+    /**
+     * Returns the heuristic value of node added at column Index.
+     * it simply returns the total weight of current node, by counting same color neighbour nodes
+     * and multiplying it with its weight.
+     *
+     * @param gameState
+     * @param filledIndex
+     * @param newValue
+     * @param colIdx
+     */
+    private getHeuristicValue(gameState, filledIndex, newValue, colIdx) {
         const countMap = [0, 0, 0, 0];
         const countWeight = [1, 4, 8, this.maxValue];
 
@@ -224,6 +275,17 @@ export class MinmaxService {
         return countMap.reduce((prev, curr, idx, countArr) => prev + curr * countWeight[idx], 0);
     }
 
+    /**
+     * Min Max Algorithm to find best route for MAx player.
+     *
+     * This is basically
+     * 1. if present node is terminal node return heuristic value that node.
+     * 2. Else if current level is min, find minimum value of all child nodes and return it.
+     * 3. Else if current level is max, find maximum value of all child nodes and return it.
+     *
+     * @param root Root of tree
+     * @param isMin Boolean to check if current level belongs to min player.
+     */
     private normalizeMinMaxTree(root, isMin) {
         if (root.isTerminal) {
             return root.hfValue;
@@ -250,6 +312,9 @@ export class MinmaxService {
         }
     }
 
+    /**
+     * Public method to get best column Index for Max Player.
+     */
     public getBestcolumn() {
         this.minMaxTree = {
             root: new Node('root', [])
@@ -273,8 +338,11 @@ export class MinmaxService {
 
 }
 
+/**
+ * Class for tree node.
+ */
 class Node {
-    data;
+    data; // No need of this field, for the sake of debugging it is kept.
     hfValue;
     isTerminal;
     childs: Node[];

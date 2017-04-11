@@ -8,6 +8,10 @@ export class DiscService {
 
     constructor() { }
 
+    /**
+     * Factory method to create and return Disc according to type.
+     * @param discType DiscType to return
+     */
     getDisc(discType: DiscTypes): DiscModel {
         let disc;
 
