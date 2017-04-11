@@ -51,7 +51,7 @@ Game starts with human's chance and computer plays its chance on its turn.
     ```
     ng serve -o
 	```
-    please visit http://localhost:4200/
+    Above command should open app in browser if not, please visit http://localhost:4200/
 3. To run test and e2e run.
 	```
     ng test
