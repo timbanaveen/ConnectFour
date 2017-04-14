@@ -1,6 +1,6 @@
 ## Connect Four
 
-[Connect Four Game](https://en.wikipedia.org/wiki/Connect_Four) implemented using Angular 2.
+[Connect Four Game](https://en.wikipedia.org/wiki/Connect_Four) implemented using Angular 4.
 
 ### Problem Statement
 Implement the Connect Four game as a web or mobile application with two modes:
